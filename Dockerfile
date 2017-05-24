@@ -36,17 +36,19 @@ RUN mv /usr/local/bin/ogpmanager.sh /usr/local/bin/ogpmanager \
 RUN useradd ogp_agent -p password -m \
     && echo 'ogp_agent ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-RUN wget -P ~ https://github.com/OpenGamePanel/OGP-Agent-Linux/archive/master.zip \
-  && unzip ~/master.zip -d ~/ \
-  && cp -rp ~/OGP-Agent-Linux-master /opt/agent
+RUN wget -P ~ https://github.com/OpenGamePanel/OGP-Agent-Linux/archive/2b7e3b729985978a0b268f517652cae579639411.zip \
+  && unzip ~/2b7e3b729985978a0b268f517652cae579639411.zip -d ~/ \
+  && cp -rp ~/OGP-Agent-Linux-2b7e3b729985978a0b268f517652cae579639411 /opt/agent
 
 RUN cd /opt/agent \
   && bash /opt/agent/install.sh install ogp_agent password /opt/OGP/
 
 COPY ogp_agent/Cfg /opt/OGP/Cfg
 
+# forward logs to docker log collector
+RUN ln -sf /dev/stdout /opt/OGP/ogp_agent.log
+
 EXPOSE 12679/tcp
-EXPOSE 27015/udp 7778/udp
-EXPOSE 32330/tcp
+EXPOSE 27015/udp 27015/udp
 
 CMD ["ogpmanager"]
