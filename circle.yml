@@ -6,6 +6,10 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "docker version"
+          command: |
+            docker -v
+      - run:
           name: "Build Image"
           command: |
             make build
