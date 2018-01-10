@@ -41,12 +41,23 @@ RUN wget -P ~ https://github.com/OpenGamePanel/OGP-Agent-Linux/archive/2b7e3b729
 RUN cd /opt/agent \
   && bash /opt/agent/install.sh install ogp_agent password /opt/OGP/
 
-COPY ogp_agent/Cfg /opt/OGP/Cfg
+RUN curl -sSLf -z /usr/local/bin/gomplate -o /usr/local/bin/gomplate https://github.com/hairyhenderson/gomplate/releases/download/v2.0.0/gomplate_linux-amd64-slim \
+  && chmod 755 /usr/local/bin/gomplate
+
+COPY templates /opt/OGP/templates
+
+# COPY ogp_agent/Cfg /opt/OGP/Cfg
 
 # forward logs to docker log collector
 # RUN ln -sf /dev/stdout /opt/OGP/ogp_agent.log
+
+ADD docker-health.sh /docker-health.sh
+
+RUN chmod +x /docker-health.sh
 
 EXPOSE 12679/tcp
 EXPOSE 27015/udp 27015/udp
 
 CMD ["ogpmanager"]
+
+HEALTHCHECK CMD ./docker-health.sh
