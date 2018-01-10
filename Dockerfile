@@ -1,7 +1,5 @@
 FROM ubuntu:16.04
 
-MAINTAINER joshhsoj1902
-
 RUN apt-get update \
  && apt-get install -y  subversion \
                         build-essential \
@@ -25,7 +23,7 @@ RUN apt-get update \
                         libio-compress-perl \
                         libfrontier-rpc-perl \
                         pure-ftpd \
-                        e2fsprogs
+                        e2fsprogs 
 
 RUN cpan Frontier::Daemon::Forking Crypt::XXTEA
 
