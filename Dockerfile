@@ -23,7 +23,8 @@ RUN apt-get update \
                         libio-compress-perl \
                         libfrontier-rpc-perl \
                         pure-ftpd \
-                        e2fsprogs 
+                        e2fsprogs \
+                        netcat
 
 RUN cpan Frontier::Daemon::Forking Crypt::XXTEA
 
