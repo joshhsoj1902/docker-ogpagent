@@ -1,6 +1,7 @@
 #!/bin/bash
 
-nc -zv localhost $OGP_LISTEN_PORT
+nc -zv localhost 12679
+# nc -zv localhost $OGP_LISTEN_PORT
 
 # monitorstring=$(nc -zv localhost $OGP_LISTEN_PORT)
 # echo $monitorstring
